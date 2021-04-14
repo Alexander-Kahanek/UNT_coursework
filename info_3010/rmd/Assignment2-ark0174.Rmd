@@ -1,0 +1,72 @@
+---
+title: "INFO 3010 - Assignment 2"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Spring 2020 by Lingzi Hong
+## Due: Monday, Feb 3, 2020
+### Instructions
+1. This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button, all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+2. Fill in the code chunks and submit this R markdown file to the assignment on Canvas. Make sure when you save that you have run all cells, so the outputs displace between the cells.
+3. make sure to replace the directoryID in the filename with your student ID. 
+
+
+### Q1 (5pts): Download the file 'Adults_Cleaned.csv' from canvas. Read the file into a dataframe.
+```{r}
+df <- read.csv("Adults_Cleaned.csv")
+```
+
+### Q2: (3pts) Write code to show first 5 lines of the dataset.
+```{r}
+head(df,5)
+```
+
+### Q3: (3pts) How many samples are in the dataset? 
+```{r}
+nrow(df)
+```
+
+### Q4: (4pts) Check the data types of each column.
+```{r}
+str(df)
+```
+
+### Q5: (5pts) How many kinds of occupations are in the dataset?
+```{r}
+print("help")
+```
+
+### Q6: (5pts) A statistical summary of the dataset.
+```{r}
+summary(df)
+```
+
+### Q7: (5pts) How many people have capital gain more than 0?
+```{r}
+nrow(df[df[,"capital.gain"]>0,])
+```
+
+### Q8: (5pts) How many people work more than 40hrs a week?
+```{r}
+nrow(df[df[,"hours.per.week"]>40,])
+```
+
+### Q9: (5pts) Number of people whose native country is Mexico and work more than 40hrs a week.
+```{r}
+nrow(df[df[,"hours.per.week"]>40 & df[,"native.country"]=="Mexico",])
+```
+
+### Q10: (5pt) For people who have got bachelor education or higher, what the is percentage to have income more than 50K?
+```{r}
+(nrow(df[df[,"education.num"] >= 13 & df[,"label"] == ">50K",])/nrow(df[df[,"education.num"]>=13,]))*100
+```
+
+### Q11: (5pts) What is the average woking hours per week for people who are husband?
+```{r}
+mean(df[df[,"relationship"]== "Husband","hours.per.week"])
+```
+

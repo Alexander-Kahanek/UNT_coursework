@@ -1,0 +1,66 @@
+---
+title: "INFO 3010 - Assignment 4"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Spring 2020 by Lingzi Hong
+## Due: Monday, Feb 17, 2020
+### Instructions
+1. This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button, all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+2. Please download the snowstorm.json from canvas. Fill in the code chunks for following question and submit this R markdown file to the assignment on Canvas. Make sure when you save that you have run all cells, so the outputs displace between the cells.
+3. make sure to replace the directoryID in the filename with your student ID. 
+
+
+### Q1. (5pts) Import the json file to R
+```{r}
+#install.packages("rjson")
+#install.packages("jsonlite")
+library(rjson)
+library(jsonlite)
+storm_tweets <- stream_in(file("snowstorm_sample.json"))
+```
+
+### Q2. (5pts) How many records are there in the json file?
+```{r}
+nrow(storm_tweets)
+```
+
+### Q3. (5pts) Extract information of 'created_at', 'id_str', 'id' of 'user', 'name' of 'user', 'full_name' of 'place', 'place_type' of 'place' from the json file and generate 6 vectors named as 'create_at', 'tweet_id', 'user_id','user_name','place_name','place_type'.
+```{r}
+create_at <- storm_tweets$created_at
+tweet_id <- storm_tweets$id_str
+user_id <- storm_tweets$user$id
+user_name <- storm_tweets$user$screen_name
+place_name <- storm_tweets$place$full_name
+place_type <- storm_tweets$place$place_type
+```
+
+### Q4. (5pts) Create a dataframe with the 6 vectors.
+```{r}
+df <- data.frame(create_at, tweet_id, user_id, user_name, place_name, place_type)
+```
+
+### Q5. (5pts) Check the first 10 lines of the data frame.
+```{r}
+head(df,10)
+```
+
+### Q6. (5pts) How many tweets are labeled with a place_type as 'city'?
+```{r}
+nrow(df[df[,'place_type']=='city',])
+```
+
+### Q7. (10pts) How many unique users are there in the dataset?
+```{r}
+length(unique(df[,"user_name"]))
+```
+
+### Q8. (10pts) How many tweets have place_name as 'Washington, DC'
+```{r}
+nrow(df[df[,"place_name"]=="Washington, DC",])
+```
+

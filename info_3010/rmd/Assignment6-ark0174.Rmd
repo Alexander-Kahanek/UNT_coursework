@@ -1,0 +1,75 @@
+---
+title: "INFO 3010 - Assignment 6"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Spring 2020 by Lingzi Hong
+## Due: Monday, Mar 23, 2020
+### Instructions
+1. This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button, all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+2. Please download the snowstorm.json from canvas. Fill in the code chunks for following question and submit this R markdown file to the assignment on Canvas. Make sure when you save that you have run all cells, so the outputs displace between the cells.
+3. make sure to replace the directoryID in the filename with your student ID. 
+4. You can get 5 bonus points for using ggplot2 package.
+
+
+### Q1. (5pts) Download the 'HousePrice.csv' dataset. Read the dataset to a dataframe. Check the structure of the dataframe.
+```{r}
+library(ggplot2)
+df <- read.csv("HousePrice.csv")
+head(df)
+```
+
+### Q2. (5pts) Draw a histogram to check the distribution of house price.
+```{r}
+ggplot(df) +
+  geom_histogram(aes(Price))
+
+#the plot is Positively skewed, with a right sided long tail
+```
+
+### Q3. (5pts) Draw a density plot to check the distribution of Sqft_Area of houses. 
+```{r}
+ggplot(df)+
+  geom_density(aes(Sqft_Area))
+
+#looks very similar to our bar graph
+```
+
+### Q4. 1) (5pts) Get a subset of data with postal code as "98178","98146" and "98118".  2) (10pts) Draw a scatter plot with the subset data. It has Sqft_Area in x-axis, Price in y-axis. The dots are colored by postal code.  
+```{r}
+df_zip <- df[df[,"Postal"]== c(98178,98146, 98118),]
+
+ggplot(df_zip)+
+  geom_point(aes(x=Sqft_Area, y=Price, color = Postal))
+
+#not sure why it is giving a warning here
+```
+
+
+### Q6. (10pts) Randomly choose a dataset you are interested. You may also keep using the hourseprice dataset. Draw a scatter plot matrix. What do you find? Write 2-3 sentences about your finding. Remember to write the sentences outside of code chunk.
+
+```{r}
+df_bed <- df[df[,"Bed"]== c(5,4,3,2,1),]
+
+ggplot(df_bed, aes(Price, Price_Sqft, color = Bed))+
+  geom_point(shape = 1)+
+  geom_smooth(method = lm, color = "black")+
+  facet_wrap(~Bed)
+
+#Here we can see that for 1 and 5 bedroom houses, there seems to be a stronger correlation between their total price, and their price per sqft. However, for 2, 3, and 4 bedrooms we see a lower correlation between price and price per square foot. However, we also have fewer datapoints for the 1 and 5 categories, which could be an explaination.
+```
+
+### Q7. (10pts) Draw a line plot with the chosen dataset. What do you find? Write 2-3 sentences about your finding.
+```{r}
+df_crime <- df[,c("Sqft_Area", "Built_Year")]
+
+ggplot(df_crime, aes(Built_Year, Sqft_Area))+
+  geom_line()+
+  geom_smooth()
+
+#Here we can see that the average sqft has stayed roughly the same throughout the build years. There is a small dip, followed by a quick rise, in 1950 however. Our regression line seems to be trending upwards.
+```

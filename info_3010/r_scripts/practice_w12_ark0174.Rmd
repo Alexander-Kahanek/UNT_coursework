@@ -1,0 +1,135 @@
+---
+title: "practice_w12_1/2"
+author: "Alexander Kahanek"
+date: "4/4/2020"
+output: html_document
+---
+
+```{r}
+options(stringsAsFactors=FALSE)
+library(plyr)
+library(dplyr)
+
+df <- read.csv('HousePrice.csv')
+df %>% 
+  head()
+```
+
+PRACTICE_W12_2
+--------------------------
+
+```{r}
+factors <- c("Price", "Crime", "MedIncome", "Sqft_Area", "Lot_Area", "Price_Sqft", "Population", "College.Graduates")
+
+df_cor <- df %>% 
+  subset(select = factors) %>% 
+  na.omit() %>% 
+  as.matrix() %>% 
+  cor() %>% 
+  '^'(2) %>% 
+  '*'(100)
+
+df_cor
+```
+
+price has a strong correlation with Sqft_Area, Price_Sqft, and College.Graduates. I will use these as a predictor for price.
+
+```{r}
+df_model <- df %>% 
+  subset(select = factors) %>% 
+  na.omit()
+
+model <-  lm(Price ~ Sqft_Area + Price_Sqft + College.Graduates, data = df_model)
+
+model
+```
+
+```{r}
+model %>% 
+  summary()
+```
+
+PRACTICE_W12_2
+--------------------------
+
+```{r}
+test <- df %>% 
+  slice(ceiling(nrow(df)*.8):nrow(df))
+
+train <- df %>% 
+  slice(1:ceiling(nrow(df)*.8)-1)
+
+train %>% 
+  head()
+
+test %>% 
+  head()
+```
+
+```{r}
+new_model <- lm(Price ~ Sqft_Area+Age+Lot_Area+Age+Crime, data = train)
+
+new_model %>% 
+  summary()
+```
+
+```{r}
+layout(matrix(c(1,2,3,4),2,2))
+plot(new_model)
+```
+
+```{r}
+predictions <- predict(new_model, newdata = test)
+
+predictions %>% 
+  summary()
+```
+
+```{r}
+library(hydroGOF)
+predictions %>% 
+  rmse(test$Price, na.rm = TRUE)
+````
+
+```{r}
+predictions %>% 
+  cor.test(test$Price, use="complete")
+```
+
+
+Long output.. not sure where its coming from.
+```{r}
+library(caret)
+
+train <- train %>% 
+  na.omit()
+
+fitControl <- trainControl(
+  method = "repeatedcv",
+  number = 5,
+  repeats = 2
+)
+
+glmFit1 <- train(Price ~ Sqft_Area+Age+Lot_Area+Crime,
+                data = train,
+                method = "penalized",
+                trControl = fitControl
+                )
+```
+
+```{r}
+glmFit1
+```
+
+```{r}
+test <- test %>% 
+  na.omit()
+
+prediction <- predict(glmFit1, newdata = test)
+
+rmse(prediction, test$Price)
+```
+
+```{r}
+cor.test(prediction, test$Price)
+```

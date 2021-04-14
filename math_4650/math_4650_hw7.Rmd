@@ -1,0 +1,55 @@
+---
+title: "math_4650_hw7"
+author: "Alexander Kahanek"
+date: "4/11/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+```{r}
+vel <- c(20.5, 20.5, 30.5, 40.5, 48.8, 57.8)
+stopdist <- c(15.4, 13.3, 33.9, 73.1, 113.0, 142.6)
+
+raw <- data.frame("velocity" = vel, "stop_distance" = stopdist) %>% 
+  mutate(
+    "sqrt_stop_dist" = sqrt(stop_distance)
+  )
+
+raw %>% head()
+```
+
+# linear model as Y~X
+
+```{r}
+out <- lm(raw$stop_distance~raw$velocity)
+
+out %>% 
+  summary()
+```
+
+thus our regresstion line is Y = -62.0454 + (3.4930)X
+
+```{r}
+plot(raw$velocity, out$residuals)
+```
+
+# Linear model as $\sqrt{Y}$~X
+
+```{r}
+sqrt_out <- lm(raw$sqrt_stop_dist~raw$velocity) 
+
+sqrt_out%>% 
+  summary()
+```
+
+thus our regresstion line of $\sqrt{Y}$ = -0.877568 + (0.227724)X
+
+
+
+```{r}
+plot(raw$velocity, sqrt_out$residuals)
+```

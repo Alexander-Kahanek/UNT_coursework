@@ -1,0 +1,129 @@
+---
+title: "INFO 3010 - Assignment 1"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## by Lingzi Hong
+## Due: Monday, Jan 27, 2020
+### Instructions
+1. This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+2. Submit this downloaded completed R markdown file in the assignment on Canvas. Make sure when you save that you have run all cells, so the outputs displace between the cells.
+3. make sure to replace the directoryID in the filename with your student ID. 
+
+
+### Q1: Compute the following values. Write code in the below chunks.
+
+(a) 27(38-17)  (3pts)
+```{r}
+x=27*(38-17)
+print(x)
+```
+
+(b) log(3^4)  (4pts)
+```{r}
+log(3^4)
+```
+
+(c) square root of 217 (4pts)
+```{r}
+x=sqrt(217)
+print(x)
+```
+
+### Q2: Create the following vectors. a = (5, 10, 15, 20, 70, 160), b = (87, 86, 85, 33, 58, 56). 
+
+(a) create a vector c, which is add results of vector a and b (3pts)
+```{r}
+a=c(5,10,15,20,70,160)
+b=c(87,86,85,33,58,56)
+n=1
+while (n<=6) {
+  x[n]<-a[n]+b[n]
+  n=n+1
+}
+print(x)
+```
+
+(b) get the 2st and 5th element of c  (4pts)
+```{r}
+print(x[2])
+print(x[5])
+```
+
+(c) how many elements of c are greater than 50 (4pts)
+```{r}
+n<-1
+count<-0
+while (n<=length(x)){
+  if (x[n]>50){
+    count <- count +1
+  }
+  n = n+1
+}
+cat("There are",count,"elements greater than 50.")
+
+```
+
+### Q3: Use c from problem 2, compute the following statistics of c:
+(a) sum (3pts)
+```{r}
+print(sum(x))
+```
+
+(b) median (4pts)
+```{r}
+print(median(x))
+```
+
+(c) summary statistics of c (4pts) 
+```{r}
+summary(x)
+```
+
+### Q4: Create the following vectors with seq or rep
+(a) c(1,3,5,7,9)  (3pts)
+```{r}
+vect1=seq(1,9,by=2)
+print(vect1)
+```
+
+(b) c(1,2,3,4,1,2,3,4) (4pts)
+```{r}
+vect2=rep(1:4,times=2)
+print(vect2)
+```
+
+(c) c(10,8,6,4,2) (4pts)
+```{r}
+vect3=seq(10,2,by=-2)
+print(vect3)
+```
+
+### Q5: create a numeric vector (0,1,0,0,1,1), change it to a vector of characters ("0","1","0","0","1","1"). (4pts)
+```{r}
+num_vect=c(0,1,0,0,1,1)
+char_vect = as.character(num_vect)
+print(char_vect)
+```
+
+### Q6: write a function, for every element in a vector, if the data type if character, print 'error'. Finally return number of characters in the vector. (6pts)
+```{r}
+vect3<-c("a","b","c")
+Count_Chars <- function(x) {
+  n=1
+  count=0
+  while (n <= length(x)) {
+    if (is.character(x[n])==1){
+      count <- count+1
+      print("error")
+    }
+    n=n+1
+  }
+  return(count)
+}
+cat("There are",Count_Chars(vect3),"characters in that vector.")
+```

@@ -1,0 +1,62 @@
+---
+title: "INFO 3010 - Assignment 7"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Spring 2020 by Lingzi Hong
+## Due: Monday, April 6, 2020
+### Instructions
+1. This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button, all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+2. Please download the snowstorm.json from canvas. Fill in the code chunks for following question and submit this R markdown file to the assignment on Canvas. Make sure when you save that you have run all cells, so the outputs displace between the cells.
+3. make sure to replace the directoryID in the filename with your student ID. 
+
+
+### Q1. (5pts) Read the file "2015.csv" to a dataframe. Have a statistical summary of the dataset. 
+```{r}
+options(stringsAsFactors=FALSE)
+library(plyr)
+library(dplyr)
+library(ggplot2)
+df <- read.csv("2015.csv")
+df %>% 
+  summary()
+```
+
+### Q2. (5pts) Draw a plot with box plot of Happiness_Score for countries in each Region group.
+```{r}
+df %>% 
+  ggplot(aes(Region, Happiness_Score, color = Region)) + geom_boxplot(stat="boxplot")
+```
+
+### Q3. (10pts) Draw a scatter plot matrix for variables: Happiness_Score, Family, Life_Expectancy and Generosity
+```{r}
+df %>% 
+  subset(select = c(Happiness_Score, Family, Life_Expectancy, Generosity)) %>% 
+  pairs()
+```
+
+### Q4. (10pts) Build a linear regression model to predict Life_Expectancy with Hapiness_Score, GDP_per_Capita, Family and Government_Corruption. 
+```{r}
+LE_model <- lm(Life_Expectancy ~ Happiness_Score + GDP_per_Capita + Family + Government_Corruption, data = df)
+```
+
+### Q6. (10pts) Check model details. Answer the following questions out of code box: What is the adjusted R-squared value? Is the linear relation significant? 
+
+```{r}
+LE_model %>% 
+  summary()
+```
+
+The adjustted r squared value is 0.3901. Since the values for the for Happiness_Score and Government_Corruption are very close to 0, the null hypothesis is rejected, stating that there is a statistically significant relationship between Life Expectancy and Happiness Score, as well as Life Expectancy and Government Corruption. 
+
+
+### Q7. (10pts) Draw diagnostic plots for the model in Q6. 
+```{r}
+LE_model %>% 
+  plot()
+```
+

@@ -1,0 +1,43 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+# homework 5, chapter 12, question 21
+
+```{r, warning= FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(reshape2)
+G1 <- c(278, 338, 334, 198, 303)
+G2 <- c(378, 275, 412, 265, 286)
+G3 <- c(172, 335, 335, 282, 250)
+G4 <- c(381, 346, 340, 471, 318)
+
+raw <- data.frame("G1" = G1, "G2" = G2, "G3" = G3, "G4" = G4) %>% 
+  melt() %>% 
+  rename("y"=value, "groups"=variable)
+
+raw %>% head(20)
+```
+
+## graphical techniques to compare groups
+
+```{r}
+boxplot(y~groups, data = raw)
+```
+
+## anova and f test
+
+```{r}
+lm(y~groups, data = raw) %>% 
+  anova()
+```
+
+because the p value is not significantly low, we cannot reject the null hypothesis. Thus, there are no significant differences among the four groups.
+
+

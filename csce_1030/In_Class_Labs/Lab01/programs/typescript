@@ -1,0 +1,26 @@
+Script started on 2019-08-29 12:25:41-0500
+]0;ark0174@cse01: ~/Lab01/programsark0174@cse01:~/Lab01/programs$ grep number *.cpp
+[35m[K01-08.cpp[m[K[36m[K:[m[K    int [01;31m[Knumber[m[K_of_pods, peas_per_pod, total_peas;
+[35m[K01-08.cpp[m[K[36m[K:[m[K    cout << "Press return after entering a [01;31m[Knumber[m[K.\n";
+[35m[K01-08.cpp[m[K[36m[K:[m[K    cout << "Enter the [01;31m[Knumber[m[K of pods:\n";
+[35m[K01-08.cpp[m[K[36m[K:[m[K    cin >> [01;31m[Knumber[m[K_of_pods;
+[35m[K01-08.cpp[m[K[36m[K:[m[K    cout << "Enter the [01;31m[Knumber[m[K of peas in a pod:\n";
+[35m[K01-08.cpp[m[K[36m[K:[m[K    total_peas = [01;31m[Knumber[m[K_of_pods * peas_per_pod;
+[35m[K01-08.cpp[m[K[36m[K:[m[K    cout << [01;31m[Knumber[m[K_of_pods;
+[35m[K02-01.cpp[m[K[36m[K:[m[K    int [01;31m[Knumber[m[K_of_bars;
+[35m[K02-01.cpp[m[K[36m[K:[m[K    cout << "Enter the [01;31m[Knumber[m[K of candy bars in a package\n";
+[35m[K02-01.cpp[m[K[36m[K:[m[K    cin >> [01;31m[Knumber[m[K_of_bars;
+[35m[K02-01.cpp[m[K[36m[K:[m[K    total_weight = one_weight * [01;31m[Knumber[m[K_of_bars;
+[35m[K02-01.cpp[m[K[36m[K:[m[K    cout << [01;31m[Knumber[m[K_of_bars << " candy bars\n";
+[35m[K02-01.cpp[m[K[36m[K:[m[K    cout << "Enter the [01;31m[Knumber[m[K of candy bars in a package\n";
+[35m[K02-01.cpp[m[K[36m[K:[m[K    cin >> [01;31m[Knumber[m[K_of_bars;
+[35m[K02-01.cpp[m[K[36m[K:[m[K    total_weight = one_weight * [01;31m[Knumber[m[K_of_bars;
+[35m[K02-01.cpp[m[K[36m[K:[m[K    cout << [01;31m[Knumber[m[K_of_bars << " candy bars\n";
+[35m[K02-08.cpp[m[K[36m[K:[m[K    cout << "Enter the [01;31m[Knumber[m[K of hours worked,\n"
+[35m[K02-08.cpp[m[K[36m[K:[m[K         << "rounded to a whole [01;31m[Knumber[m[K of hours: ";
+]0;ark0174@cse01: ~/Lab01/programsark0174@cse01:~/Lab01/programs$ grep Number *.cpp
+[35m[K02-17.cpp[m[K[36m[K:[m[K//Assignment [01;31m[KNumber[m[K: 2
+]0;ark0174@cse01: ~/Lab01/programsark0174@cse01:~/Lab01/programs$ exit
+exit
+
+Script done on 2019-08-29 12:27:11-0500

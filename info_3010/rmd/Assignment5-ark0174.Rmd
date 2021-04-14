@@ -1,0 +1,83 @@
+---
+title: "INFO 3010 - Assignment 5"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Spring 2020 by Lingzi Hong
+## Due: Monday, Mar 2, 2020
+### Instructions
+1. This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button, all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+2. Please download the snowstorm.json from canvas. Fill in the code chunks for following question and submit this R markdown file to the assignment on Canvas. Make sure when you save that you have run all cells, so the outputs displace between the cells.
+3. make sure to replace the directoryID in the filename with your student ID. 
+
+
+### Q1. (5pts) Load and parse the "snowstorm_sample2.json" file to a dataframe.
+```{r}
+library(streamR)
+library(tm)
+
+tweet_df<-parseTweets(tweets='snowstorm_sample2.json')
+```
+
+### Q2. (5pts) Take the text of tweet, compute the corpus and check the first 10 lines of the corpus.
+```{r}
+textdf<-tweet_df$text
+myCorpus<-Corpus(VectorSource(textdf))
+inspect(myCorpus[1:10])
+```
+
+### Q3. (5pts) Use any stop words list and remove the stop words from corpus, then check the first 10 lines of the corpus.
+```{r}
+myCorpus<-tm_map(myCorpus, removeWords, stopwords("english"))
+
+inspect(myCorpus[1:10])
+```
+
+### Q4. (5pts) Remove punctuations in the corpus, then check the first 10 lines of the corpus.
+```{r}
+myCorpus<-tm_map(myCorpus, removePunctuation)
+
+inspect(myCorpus[1:10])
+```
+
+### Q5. (5pts) Convert all characters to lower case, then check the first 10 lines of the corpus. 
+```{r}
+myCorpus <- tm_map(myCorpus,tolower)
+
+inspect(myCorpus[1:10])
+```
+
+### Q6. (5pts) Generate the document term matrix and check a slice of the matrix. 
+```{r}
+myCorpus<-tm_map(myCorpus, removeNumbers)
+
+myDtm<-TermDocumentMatrix(myCorpus, control = list(minWordLength= 1))
+
+inspect(myDtm[12:25,1:10])
+```
+
+### Q7. (10pts) Get the total number of frequency for each word.
+```{r}
+m <- as.matrix(myDtm)
+
+myDtm_rowsum <- rowSums(m)
+myDtm_rowsum
+
+#Unlock below code to get total sum of words
+#sum(myDtm_rowsum)
+```
+
+### Q8. (10pts) Get the ten most frequent words based on Q7. 
+```{r}
+sorted_rowsums <- sort(myDtm_rowsum, decreasing = TRUE)
+
+
+names(sorted_rowsums[1:10])
+#unlock below code to get the frequency of the words
+#sorted_rowsums[1:10]
+```
+

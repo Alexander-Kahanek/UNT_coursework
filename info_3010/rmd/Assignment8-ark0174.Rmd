@@ -1,0 +1,144 @@
+---
+title: "INFO 3010 - Assignment 8"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Spring 2020 by Lingzi Hong
+## Due: Monday, April 13, 2020
+### Instructions
+1. This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button, all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+2. Please download the snowstorm.json from canvas. Fill in the code chunks for following question and submit this R markdown file to the assignment on Canvas. Make sure when you save that you have run all cells, so the outputs displace between the cells.
+3. make sure to replace the directoryID in the filename with your student ID. 
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(GGally)
+
+#making life ezpz
+tt_split <- function(data, percent, side){
+  ## FUNCTION FOR SPLITTING BY PERCENT CHOSEN
+  if(side == 'top'){
+    data <- data %>% #top X% of data
+      slice(1:ceiling(nrow(data)*percent))
+  }
+  else if (side == 'bot'){
+    data <- data %>% #bottom X% of data
+      slice(ceiling(nrow(data)*percent)+1:nrow(data))
+  }
+  else{
+    print("choose top or bot portion of data")
+  }
+  return(data)
+}
+```
+
+### Q1. (5pts)  Create a function that can convert fahrenheit to celsius. The formula is (F-32)*5/9 = C. Fill in the function body. There is a test case to convert fahrenheit 86 to celsius. 
+```{r}
+convert_F2C <- function(num){
+  num = (num-32)*5/9
+  return(num)
+}
+
+convert_F2C(86)
+```
+
+### Q2. (5pts) Read the file '2016.csv' to a dataframe. Check the first 5 lines of the data. 
+```{r}
+df <- read.csv('2016.csv')
+df %>% 
+  head(5)
+```
+
+### Q3. (5pts) Use the dataframe in Q3. Compute the average Hapiness_Score for countries in North America. 
+```{r}
+df %>% 
+  subset(Region == "North America") %>% 
+  summarise(
+    Region = "North America",
+    mean_hap = mean(Happiness_Score)
+  )
+```
+
+### Q4. (5pts) Use the dataframe in Q3. Write code to compute the difference in Generosity between United States and Mexico.
+```{r}
+us_gen <- df %>%
+  subset(Country == "United States", select = Generosity) %>%
+  as.numeric()
+
+mex_gen <- df %>%
+  subset(Country == "Mexico", select = Generosity) %>%
+  as.numeric()
+
+us_gen - mex_gen
+```
+
+### Q5. (5pts) Use the dataframe in Q3. Plot the dataframe columns Happiness_Rank and Happiness_Score as a line graph
+
+```{r}
+df %>% 
+  ggplot(aes(x=Happiness_Rank, y=Happiness_Score)) +
+  geom_line()
+```
+
+### Q6. (5pts) Use the dataframe in Q3. Plot the scatter plot matrix for the four variables: Family, Life_Expectancy,Freedom, Generosity
+```{r}
+df %>%  
+  subset(select = c(Family, Life_Expectancy, Freedom, Generosity)) %>%
+  ggpairs()
+```
+
+### Q7. (5pts) Get a subset of data with countries from Region of "Western Europe" and "North America" and "Eastern Asia".
+```{r}
+regions = c("North America", "Western Europe", "Eastern Asia")
+
+reg_data <- df %>% 
+  subset(Region %in% regions)
+```
+### Q8. (5pts) Use the subset data in Q8. Draw a scatter plot with Government_Corruption in the x-axis, Freedom in the y-axis, and the points are colored by region. 
+```{r}
+reg_data %>% 
+  ggplot()+
+  geom_point(aes(x=Government_Corruption, y= Freedom, color = Region))
+```
+
+### Q9. (5pts) Build a linear regression model: predict Happiness_Score with variables GDP_per_Capita, Family, Life_Expectancy and Freedom. 
+```{r}
+data <- df %>% 
+  subset(select = c(Happiness_Score, GDP_per_Capita, Family, Life_Expectancy, Freedom))
+
+train <- data %>% 
+  tt_split(0.8, 'top')
+
+test <- data %>% 
+  tt_split(0.8, 'bot')
+
+lm.fit <- lm(Happiness_Score ~ GDP_per_Capita + Family + Life_Expectancy + Freedom,
+               data = train)
+```
+
+### Q10. (5pts) Get a summary of the model. Answer the following questions out of the code chunk: what is the adjusted R-squared? What is the coefficient of GDP_per_Capita?
+```{r}
+lm.fit %>% 
+  summary()
+```
+
+When Happiness Score is 0, we can expect the values of our Predictors to be 2.4807.
+
+The estimated coefficient in GDP per Capita is 0.7099, this tells us that when the Happiness score increases by 1 point, we should expect the GDP score to increase by 0.7099
+
+Std. Error is an estimate of variability, t value = est/std error, how big is the error, relative to my estimates. The P value tells us how statistically significant our factors are. When p is significantly small, we can reject the null hypothesis and claim that the factor is statistically significant.
+
+Residual standard error is the Root Mean Square Error, which is 0.5115 for this model. This tells us that, on average, the model has an error of ~0.5 when predicting the Happiness Score
+
+The Multiple R-squared value is 0.6963, this means that about 70% of the Happiness Score can be explained by the variations in the other four factors.
+
+The Adjusted R-squared becomes lower when variables are added to the model that have no relation to the predictions. Both our R-squared values are very close to eachother, this would suggest that all of the factors are statistically significant to predict the Happiness Score.
+
+The F statistic shows how well the model does compared to the error. Measuring the significance of the overall model. The higher the F value, tells us that the model explains more than the actual data itself. It also tells us the degree of freedoms of the model aswell as the data. As we have 4 predictors, the df for the model is 4.
+
+The final p-value is very close to zero, suggesting that the overall model is statistically significant.
