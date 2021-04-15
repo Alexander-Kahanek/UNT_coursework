@@ -4,14 +4,14 @@ A repository of my coursework from various classes, during my time at the Univer
 
 Included courses are:
 
-+ CSCE
-  - 1030 -- Computer Science I
-  - 1040 -- Computer Science II
++ Computer Science
+  - CSCE 1030 -- Computer Science I
+  - CSCE 1040 -- Computer Science II
 
-+ INFO
-  - 3010 -- Introduction to Data Science
-  - 3020 -- Introduction to Computation with Python
-  - 4501 -- Principles of Data Science and Analytics
++ Information Science
+  - INFO 3010 -- Introduction to Data Science
+  - INFO 3020 -- Introduction to Computation with Python
+  - INFO 4501 -- Principles of Data Science and Analytics
 
-+ MATH
-  - 4650 -- Statistics
++ Mathematics
+  - MATH 4650 -- Statistics
