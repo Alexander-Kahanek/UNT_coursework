@@ -9,9 +9,9 @@ Included courses are:
   - 1040 -- Computer Science II
 
 + INFO
- - 3010 -- Introduction to Data Science
- - 3020 -- Introduction to Computation with Python
- - 4501 -- Principles of Data Science and Analytics
+  - 3010 -- Introduction to Data Science
+  - 3020 -- Introduction to Computation with Python
+  - 4501 -- Principles of Data Science and Analytics
 
 + MATH
- - 4650 -- Statistics
+  - 4650 -- Statistics
