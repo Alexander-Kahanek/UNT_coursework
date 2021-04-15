@@ -5,8 +5,8 @@ A repository of my coursework from various classes, during my time at the Univer
 Included courses are:
 
 + CSCE
- - 1030 -- Computer Science I
- - 1040 -- Computer Science II
+  - 1030 -- Computer Science I
+  - 1040 -- Computer Science II
 
 + INFO
  - 3010 -- Introduction to Data Science
