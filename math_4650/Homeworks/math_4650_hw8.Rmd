@@ -1,0 +1,42 @@
+---
+title: "math_4650_hw8"
+author: "Alexander Kahanek"
+date: "4/21/2021"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+```
+
+## read in data
+
+```{r}
+raw <- read.csv('airpollution.csv')
+
+raw %>% head()
+```
+
+## Correlation matrix
+
+```{r}
+raw %>% 
+  cor()
+```
+
+## model all variables: Oxidant ~ day, wind, temp, hum, inso
+
+```{r}
+model <- lm(Oxidant ~ . , data = raw)
+
+summary(model)
+```
+
+## model only: Oxidant ~ wind, temp
+
+```{r}
+model <- lm(Oxidant ~ Wind + Temperature , data = raw)
+
+summary(model)
+```
