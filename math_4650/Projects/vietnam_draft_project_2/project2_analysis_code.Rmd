@@ -1,0 +1,99 @@
+---
+title: "MATH 4650 - Project 2"
+author: "Alexander Kahanek"
+date: "4/25/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+raw <- read.csv('1970lottery.csv')
+
+raw %>% head()
+```
+
+## question 1 -- scatterplot
+
+```{r}
+raw %>% 
+  ggplot(aes(x=Day_of_year, y=Draft_No)) +
+  geom_point()
+```
+
+## part of Q1 (not actually needed)
+
+
+```{r}
+raw %>% 
+  select(Draft_No, Day_of_year) %>% 
+  cor()
+```
+
+## Question 2 -- simple linear regression model
+
+```{r}
+linear <- lm(Draft_No~Day_of_year,data = raw)
+
+linear %>% 
+  summary()
+```
+
+## Question 2 -- QQ plot
+
+```{r}
+linear %>% 
+  plot()
+```
+
+## Question 3 -- change linear model?
+
+Tried sqrt and log on independant and dependant variables, each attempt had no beneficial effect.
+
+```{r}
+linear <- lm(Draft_No~sqrt(Day_of_year),data = raw)
+
+linear %>% 
+  summary()
+```
+
+
+```{r}
+linear %>% 
+  plot()
+```
+
+## Question 4 -- boxplots
+
+```{r}
+raw %>% 
+  ggplot() +
+  geom_boxplot(aes(x=Month, y = Draft_No))
+```
+
+## Question 5 -- anova across months
+
+```{r}
+aov(Draft_No~Month, data = raw) %>% summary()
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
