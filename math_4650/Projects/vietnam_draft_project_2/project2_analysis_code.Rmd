@@ -22,8 +22,9 @@ raw %>% head()
 
 ```{r}
 raw %>% 
-  ggplot(aes(x=Day_of_year, y=Draft_No)) +
-  geom_point()
+  ggplot(aes(x = Day_of_year, y = Draft_No)) +
+  geom_point() + 
+  labs(title = "A comparison of the day of the years and its respective draft number")
 ```
 
 ## part of Q1 (not actually needed)
@@ -38,16 +39,13 @@ raw %>%
 ## Question 2 -- simple linear regression model
 
 ```{r}
-linear <- lm(Draft_No~Day_of_year,data = raw)
-
-linear %>% 
-  summary()
+model <- lm(Draft_No ~ Day_of_year, data = raw) %>% summary()
 ```
 
 ## Question 2 -- QQ plot
 
 ```{r}
-linear %>% 
+model %>% 
   plot()
 ```
 
@@ -56,7 +54,7 @@ linear %>%
 Tried sqrt and log on independant and dependant variables, each attempt had no beneficial effect.
 
 ```{r}
-linear <- lm(Draft_No~sqrt(Day_of_year),data = raw)
+linear <- lm(sqrt(Draft_No) ~ sqrt(Day_of_year),data = raw)
 
 linear %>% 
   summary()
@@ -73,13 +71,15 @@ linear %>%
 ```{r}
 raw %>% 
   ggplot() +
-  geom_boxplot(aes(x=Month, y = Draft_No))
+  geom_boxplot(aes(x = as.factor(Month_Number), y = Draft_No)) +
+  scale_x_discrete(labels = c("Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec")) + 
+  labs(title = "A comparison of the distributions of draft number across the months")
 ```
 
 ## Question 5 -- anova across months
 
 ```{r}
-aov(Draft_No~Month, data = raw) %>% summary()
+aov(Draft_No ~ Month, data = raw) %>% summary()
 ```
 
 ```{r}
