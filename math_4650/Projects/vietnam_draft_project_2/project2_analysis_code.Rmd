@@ -97,7 +97,7 @@ raw %>%
 ## Question 5 -- other tests
 
 ```{r}
-kruskal.test(Draft_No ~ Month_Number, data = raw)
+kruskal.test(Draft_No ~ Month, data = raw)
 ```
 
 
