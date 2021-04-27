@@ -39,7 +39,7 @@ raw %>%
 ## Question 2 -- simple linear regression model
 
 ```{r}
-model <- lm(Draft_No ~ Day_of_year, data = raw) %>% summary()
+model <- lm(Draft_No ~ Day_of_year, data = raw)
 ```
 
 ## Question 2 -- QQ plot
@@ -82,18 +82,26 @@ raw %>%
 aov(Draft_No ~ Month, data = raw) %>% summary()
 ```
 
-```{r}
+## Question 5 -- testing parametric and homgeneity of variance
 
+```{r}
+raw %>% 
+  group_by(Month) %>% 
+  summarise(
+    month_number = max(Month_Number)
+    ,length = n()
+    ,variance = var(Draft_No)) %>% 
+  arrange(month_number)
 ```
 
-```{r}
+## Question 5 -- other tests
 
+```{r}
+kruskal.test(Draft_No ~ Month_Number, data = raw)
 ```
 
-```{r}
-
-```
 
 ```{r}
-
+library(FSA)
+dunnTest(Draft_No ~ Month, data = raw, method = 'bh')
 ```
